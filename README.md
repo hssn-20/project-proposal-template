@@ -1,66 +1,65 @@
-# Proposal Title
+# DNA LLM
 
-A proposal by project instigator 1, project instigator 2, etc.
+A proposal by Hassan Ahmed
 
 ## Abstract
 
-Provide brief outline motivating the project. How would it positively impact biological research? What is the hypothesis behind it? No need to discuss datasets or models  yet, we will do that later. Focus on the grand picture and \textit{why} the community should care about it.
+DNA-only LLMs that can be used as: encoders for comparisons/classifications, base models for finetuned sequence generators (an antiphage generator) or even quality checks of the sequencing process
 
 ## Introduction and Prior Work
 
-Provide a short (preferably beginner friendly) introduction to the project and a brief outline of the literature most relevant to it. How does the project fit into this context?
+Currently most dna based models are species specific, trained on small high quality datasets or large low quality ones. This project hopes to create high quality datasets of variying sequence lengths. 
+
+Examples: 
+- https://github.com/AIRI-Institute/GENA_LM
+- [Nucleotide transformers](https://github.com/instadeepai/nucleotide-transformer)
+
 
 ## Deliverables
 
-What do we plan to provide the broader community with upon the completion of the project? Datasets? Models? APIs? Every deliverable should preferably have its own subsection with its associated potential impact, although it is not required.
-
 ### Datasets
-
-If applicable, how large is the dataset that the project aims to produce? How difficult is producing such a dataset expected to be? What kind of resources are needed? What license will the dataset be licensed under? MIT is preferred but not required.
-
+We plan to create datasets of varying sequences lengths which are deduplicated to varying levels of similarity e.g. sequence length 10k, max similarity 50%, kmer 7
+The largest dataset will be 990GB for the largest dataset i.e. all the sequences on Genbank. This dataset has already been scraped from NCBI and uploaded to Huggingface, all thats left to deduplicate/process it for the other smaller datasets. To do that, we'll need a machine with roughly 1TB of RAM.
 
 ### Models
 
-If applicable, does the project aim to release more than one model? What would be the input modality? What about the output modality? How large are the models that the project aims to release? Are there other important differences between the models to be released? If the models are very different, consider writing a short subsection for each model type.
-
-### APIs
-
-If applicable, what kind of API does the project aim to release? Are there any existing APIs that it could be integrated into? What kind of documentation could the project provide?
-
-### Paper
-
-Can the project be turned into a paper? What does the evaluation process for such a paper look like? What conferences are we targeting? Can we release a blog post as well as the paper?
+If applicable, does the project aim to release more than one model? 
+Yes, we hope to release models of varying sizes trained on sequences of varying simliarities/lengths
+What would be the input modality?
+Nucleotides encoded as text
+What about the output modality? 
+Depends on the model type. The decoder models will generate nucleotides, the encoder models will generate a vector/embedding. 
+How large are the models that the project aims to release?
+The sizes of the models will depend on our datasets.
 
 ## Resources
 
 ### Requirements
 
 What kinds of resources (e.g. GPU hours, RAM, storage) are needed to complete the project?
+- Roughly 100-1000GPU hours(dependant on the dataset sizes)
+- 1TB of RAM for the processing stage
+- 5 TB of storage on S3
 
 ### Timeline
 
 What is a (rough) timeline for this project?
-
-## Broader Impact
-
-How is the project expected to positively impact biological research at large?
+- 1 week to deduplicate/prepare the dataset
+- 1-2 weeks to train the model
+- 1 week to analyse the results
 
 ## Reproducibility
 
-What steps are going to be taken to ensure the project's reproducibility? Will data processing scripts be released? What about training logs?
+What steps are going to be taken to ensure the project's reproducibility?
+We'll be releasing the code written & used in the project + the training logs
 
 ## Failure Case
 
 If our findings are unsatisfactory, do we have an exit plan? Do we have deliverables along the way that we can still provide the community with?
-
-## Preliminary Findings
-
-If applicable, mention any preliminary findings (e.g. experiments you have run on your own or heard about) that support the project's importance.
+Yes, the datasets on their own would be useful for the wider community
 
 ## Next Steps
 
 If the project is successfully completed, are there any obvious next steps?
+Finetuned generative models for various viruses/virus-like particles e.g. bacteriophages etc.
 
-## Known contributors
-
-Please list community members that you know are interested in contributing. It is best if a project proposal already has an associated team capable of going ahead with the project by themselves, but it is not necessary.
