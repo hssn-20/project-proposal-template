@@ -14,6 +14,8 @@ Examples:
 - https://github.com/AIRI-Institute/GENA_LM
 - [Nucleotide transformers](https://github.com/instadeepai/nucleotide-transformer)
 
+This means the models trained will be of different scale and scope. Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species. Scale- There are currently no models trained on context windows above 10k+. This project will mean the first foundational model capable of generating full genome. 
+
 
 ## Deliverables
 
