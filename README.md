@@ -35,16 +35,25 @@ The largest dataset will be 990GB for the largest dataset i.e. all the sequences
 
 If applicable, does the project aim to release more than one model? 
 Yes, we hope to release models of varying sizes trained on sequences of varying simliarities/lengths
+
 **UPDATE**
 
 There will be both a foundational model and models finetune to specific species/organism categories. For example, models specific to viruses/mammals
+
 What would be the input modality?
+
 Nucleotides encoded as text - DNA/RNA sequences
+
 What about the output modality? 
+
 Depends on the model type. The decoder models will generate nucleotides, the encoder models will generate a vector/embedding. 
+
 How large are the models that the project aims to release?
+
 The sizes of the models will depend on our datasets.
+
 **UPDATE**
+
 A viral model can be as small 300M parameters, however the foundational model will have to be at least 3-4B parameters. 
 
 ## Resources
@@ -64,6 +73,7 @@ What is a (rough) timeline for this project?
 - 1 week to analyse the results
 
 **UPDATE**
+
 That timeline was *HIGHLY* ambitious. The time needed to prepare the dataset is highly dependant on model architecture. An estimate is better made by those who have managed to train an LLM of this scale. 
 
 ## Reproducibility
@@ -77,6 +87,7 @@ If our findings are unsatisfactory, do we have an exit plan? Do we have delivera
 Yes, the datasets on their own would be useful for the wider community
 
 **UPDATE**
+
 This still holds true + the encoder models will defintely be usefull for downstream tasks
 
 ## Next Steps
@@ -85,5 +96,6 @@ If the project is successfully completed, are there any obvious next steps?
 Finetuned generative models for various viruses/virus-like particles e.g. bacteriophages etc.
 
 **UPDATE**
+
 Above + combining the model with other models/projects (eg. ProteinScaling Project, ChemLLM etc.)
 
