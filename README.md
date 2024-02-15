@@ -1,6 +1,6 @@
 # DNA LLM
 
-A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi) 
+A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project slides](https://docs.google.com/presentation/d/1VxHHlj-oJJP8QqPrabcQv0-YYwXhQwiZx7HRmBJ3lb4/edit?usp=sharing)
 
 ## Abstract
 
