@@ -78,7 +78,7 @@ What is a (rough) timeline for this project?
 
 **UPDATE**
 
-That timeline was *HIGHLY* ambitious. The time needed to prepare the dataset is highly dependant on model architecture. An estimate is better made by those who have managed to train an LLM of this scale. 
+That timeline was *HIGHLY* ambitious. The time needed to prepare the dataset is highly dependant on model architecture. An estimate is better made by those who have managed to train an LLM of this scale. 1TB of RAM is not necessary as we can do processing in chunks 
 
 ## Reproducibility
 
