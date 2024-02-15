@@ -65,7 +65,7 @@ A viral model can be as small 300M parameters, however the foundational model wi
 ### Requirements
 
 What kinds of resources (e.g. GPU hours, RAM, storage) are needed to complete the project?
-- Roughly 100-1000GPU hours(dependant on the dataset sizes) - This is an estimate. The actual GPU requirements will be dependant on model architecture
+- Roughly 100-1000GPU hours(dependant on the dataset sizes) - This is an estimate. The actual GPU requirements will be dependant on model architecture. The results from our first should provide better guidance
 - 1TB of RAM for the processing stage
 - 5 TB of storage on S3
 
