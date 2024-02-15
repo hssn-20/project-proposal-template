@@ -81,10 +81,13 @@ That timeline was *HIGHLY* ambitious. The time needed to prepare the dataset is 
 What steps are going to be taken to ensure the project's reproducibility?
 We'll be releasing the code written & used in the project + the training logs
 
+## Validation
+[Validation Library](https://github.com/hssn-20/dvq)
+
 ## Failure Case
 
 If our findings are unsatisfactory, do we have an exit plan? Do we have deliverables along the way that we can still provide the community with?
-Yes, the datasets on their own would be useful for the wider community
+Yes, the datasets on their own would be useful for the wider community. As would the validation library
 
 **UPDATE**
 
