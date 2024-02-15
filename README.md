@@ -10,12 +10,16 @@ Nucleotide-only LLMs that can be used as: encoders for comparisons/classificatio
 
 Currently most nucleotide based models are species specific, trained on small high quality datasets or large low quality ones. This project hopes to create a high quality dataset of various species of varying sequence lengths. 
 
-Examples of current works: 
-- [GENE_LM](https://github.com/AIRI-Institute/GENA_LM)
-- [Nucleotide transformers](https://github.com/instadeepai/nucleotide-transformer)
-- [DNA BERT](https://github.com/Zhihan1996/DNABERT_2)
-- [HyenaDNA](https://github.com/HazyResearch/hyena-dna)
-- [BEND](https://github.com/frederikkemarin/BEND) - This isnt a model but a benchmark. 
+| Model                             | Parameters | Dataset                                                                                               | Dataset size | Context Window | Our improvements                                      |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- | ------------ | -------------- | ----------------------------------------------------- |
+| HyenaDNA                          | 0.44M-6.6M | [Human Refrence Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)               | 3.1B         | 1k-1M          | Larger dataset + Longer context windows + Multispecie |
+| DNABert2                          | 117M       | [Multi-species genome](https://arxiv.org/pdf/2306.15006.pdf#table.7)                                  | 32.49B       | 512            | Larger dataset + Longer context windows               |
+| Nucleotide Transformer            | 50M-2.5B   | [Multi-species genome](https://www.biorxiv.org/content/10.1101/2023.01.11.523679v2.full.pdf#A.2)      | 1T           | 2024           | Larger dataset + Longer context windows               |
+| Genomic Pre-trained Network (GPN) | 30M ~      | [Single Specie(Brassicales)](https://huggingface.co/datasets/songlab/genomes-brassicales-balanced-v1) | 1.23GB       | 512            | Larger dataset + Longer context windows               |
+| Gena-LM                           | 110M       | Human + Multispecis genome                                                                            | ~10B         | 512-4096       | Larger dataset + Longer context windows               |
+| Grover                            | 350M       | [HG19](https://zenodo.org/records/8373053)                                                            | 2.3GiB       | 512            | Larger dataset + Longer context windows               |
+
+ 
 
 The project is different because the models trained will be both of a different scale and scope. Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species. Scale - There are currently no models trained on context windows above 1M+. This project will hopefully be the first foundational model capable of generating full genomes. 
 
@@ -82,7 +86,8 @@ What steps are going to be taken to ensure the project's reproducibility?
 We'll be releasing the code written & used in the project + the training logs
 
 ## Validation
-[Validation Library](https://github.com/hssn-20/dvq)
+
+We're building a [validation library](https://github.com/hssn-20/dvq) to compare generated sequences with source sequences. The library will include a wide range of methods to allow us to inspect sequences visually as well as statistically. 
 
 ## Failure Case
 
