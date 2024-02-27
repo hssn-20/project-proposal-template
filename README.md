@@ -1,109 +1,101 @@
+
 # DNA LLM
 
 A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project slides](https://docs.google.com/presentation/d/1VxHHlj-oJJP8QqPrabcQv0-YYwXhQwiZx7HRmBJ3lb4/edit?usp=sharing)
 
 ## Abstract
 
-Nucleotide-only LLMs that can be used as: encoders for comparisons/classifications, base models for finetuned sequence generators (for example an antiphage generator) and even basecalling quality checks of the sequencing process
+This project aims to: 
+Create a DNA sequence - natural language description dataset of diverse species combining publicly available sequences & research papers.
+Build optimised models for DNA that outperform the current state of the art
+Build DNA models able to generate whole genomes
+
+Possible downstream tasks for Nucleotide-only LLMs could include:
+Encoders for comparisons/classifications
+Base models for finetuned sequence generators & predictors (for example a page generator for a given bacterial genome, whole genomes for de novo organisms or antibiotic classifiers that take into account bacterial plasmid dna) 
+Predicting sequence quality from small sequences (as found in functional genomics) and large sequences as found in sequencing projects for whole genomes. 
+
 
 ## Introduction and Prior Work
 
-Currently most nucleotide based models are species specific, trained on small high quality datasets or large low quality ones. This project hopes to create a high quality dataset of various species of varying sequence lengths. 
+Currently most nucleotide based models are species specific, trained on small high quality datasets or large low quality ones. This project hopes to create a high quality dataset of various species of varying sequence lengths.
 
-| Model                             | Parameters | Dataset                                                                                               | Dataset size | Context Window | Our improvements                                      |
+| Model                         	| Parameters | Dataset                                                                                           	| Dataset size | Context Window | Our improvements                                  	|
 | --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- | ------------ | -------------- | ----------------------------------------------------- |
-| HyenaDNA                          | 0.44M-6.6M | [Human Refrence Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)               | 3.1B         | 1k-1M          | Larger dataset + Longer context windows + Multispecie |
-| DNABert2                          | 117M       | [Multi-species genome](https://arxiv.org/pdf/2306.15006.pdf#table.7)                                  | 32.49B       | 512            | Larger dataset + Longer context windows               |
-| Nucleotide Transformer            | 50M-2.5B   | [Multi-species genome](https://www.biorxiv.org/content/10.1101/2023.01.11.523679v2.full.pdf#A.2)      | 1T           | 2024           | Larger dataset + Longer context windows               |
-| Genomic Pre-trained Network (GPN) | 30M ~      | [Single Specie(Brassicales)](https://huggingface.co/datasets/songlab/genomes-brassicales-balanced-v1) | 1.23GB       | 512            | Larger dataset + Longer context windows + Multispecie               |
-| Gena-LM                           | 110M       | Human + Multispecis genome                                                                            | ~10B         | 512-4096       | Larger dataset + Longer context windows               |
-| Grover                            | 350M       | [HG19](https://zenodo.org/records/8373053)                                                            | 2.3GiB       | 512            | Larger dataset + Longer context windows + Multispecie               |
+| HyenaDNA                      	| 0.44M-6.6M | [Human Reference Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)           	| 3.1B     	| 1k-1M      	| Larger dataset + Longer context windows + Multispecie |
+| DNABert2                      	| 117M   	| [Multi-species genome](https://arxiv.org/pdf/2306.15006.pdf#table.7)                              	| 32.49B   	| 512        	| Larger dataset + Longer context windows           	|
+| Nucleotide Transformer        	| 50M-2.5B   | [Multi-species genome](https://www.biorxiv.org/content/10.1101/2023.01.11.523679v2.full.pdf#A.2)  	| 1T       	| 2024       	| Larger dataset + Longer context windows           	|
+| Genomic Pre-trained Network (GPN) | 30M ~  	| [Single Specie(Brassicales)](https://huggingface.co/datasets/songlab/genomes-brassicales-balanced-v1) | 1.23GB   	| 512        	| Larger dataset + Longer context windows + Multispecie           	|
+| Gena-LM                       	| 110M   	| Human + Multispecie genome                                                                        	| ~10B     	| 512-4096   	| Larger dataset + Longer context windows           	|
+| Grover                        	| 350M   	| [HG19](https://zenodo.org/records/8373053)                                                        	| 2.3GiB   	| 512        	| Larger dataset + Longer context windows + Multispecie           	|
 
  
 
-The project is different because the models trained will be both of a different scale and scope. Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species. Scale - There are currently no models trained on context windows above 1M+. This project will hopefully be the first foundational model capable of generating full genomes. 
+The project is different because the models trained will be both of a different scale and scope.
+Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species.
+Scale - There are currently no models trained on context windows above 1M+. This project will hopefully be the first foundational model capable of generating full genomes.
 
+To validate the thesis that scaling of context size improves model results, we [tested](https://huggingface.co/spaces/Hack90/context_and_viral_dna_models) a range of context windows and their effect on results. The results indicate potential for gains from increased context windows. 
+
+To gain intuition with regard to the importance of increasing organism variety, we created a [dashboard](https://huggingface.co/spaces/Hack90/virus_explorer) to display the underlying complexity of genomes. 
 
 ## Deliverables
 
 ### Datasets
-We plan to create datasets of varying sequences lengths which are deduplicated to varying levels of similarity e.g. sequence length 10k, max similarity 50%, kmer 7
-The largest dataset will be 990GB for the largest dataset i.e. all the sequences on Genbank. This dataset has already been scraped from NCBI and uploaded to Huggingface, all thats left to deduplicate/process it for the other smaller datasets. To do that, we'll need a machine with roughly 1TB of RAM.
 
-**UPDATE**
+For our initial nucleotide models we have decided to use the RefSeq dataset: 
 
-1. Deduplicating the dataset on arbitrary break points is counterproductive to our goal of creating a model capable of generating full sequences. Instead, we will deduplicate based on species. This reduces the NCBI dataset from 990GB to roughly 300GB. The pipeline can be extending to other genome databases. Yes, this will result in a LOT of repeat sequences but these serve both an evolutionary and structural [purpose](https://pubmed.ncbi.nlm.nih.gov/15921050/)
-2. The full NCBI dataset has been removed from HuggingFace due to ethical/safety concerns. Ethical - although NCBI itself doesnt place restricttions on redestribution, we though it'd be best to wait until we've added attributions to the pipeline ie. this sequence was generated by this institute/person at that particular time. Safety - although all of the sequences are accessible, thought needs to be put into what the effect will be of reducing friction.  
+| Type         	| Tokens | Size	| Huggingface                                                                                                              	|
+| ---------------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Fungi        	| 18B	| 5.4GB   | [https://huggingface.co/datasets/Hack90/ref_seq_fungi](https://huggingface.co/datasets/Hack90/ref_seq_fungi)             	|
+| Bacteria     	| 1368B  | 402GB   |                                                                                                                          	|
+| Invertebrate 	| 369B   | 108GB   | [https://huggingface.co/datasets/Hack90/ref_seq_invertebrate](https://huggingface.co/datasets/Hack90/ref_seq_invertebrate)   |
+| Mammals      	| 859B   | 252GB   |                                                                                                                          	|
+| Vertebrate Other | 867B   | 255GB   |                                                                                                                          	|
+| Protozoa     	| 3.7B   | 1GB 	| [https://huggingface.co/datasets/Hack90/ref_seq_protozoa](https://huggingface.co/datasets/Hack90/ref_seq_protozoa)       	|
+| Plasmids     	| 6.4B   | 1.89GB  | [https://huggingface.co/datasets/Hack90/ref_seq_plasmid](https://huggingface.co/datasets/Hack90/ref_seq_plasmid)         	|
+| Plastids     	| 2.1B   | 0.63GB  | [https://huggingface.co/datasets/Hack90/ref_seq_plastid](https://huggingface.co/datasets/Hack90/ref_seq_plastid)         	|
+| Archea       	| 5.4B   | 1.588GB | [https://huggingface.co/datasets/Hack90/ref_seq_archaea](https://huggingface.co/datasets/Hack90/ref_seq_archaea)         	|
+| Viruses      	| 0.54B  | 0.161GB | [https://huggingface.co/datasets/Hack90/ref_seq_viral](https://huggingface.co/datasets/Hack90/ref_seq_viral)             	|
+| Plants       	| 299B   | 88.2GB  |                                                                                                                          	|
+| Mitochondrion	| 0.537B | 0.158GB | [https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion](https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion) |
+| Total        	| 3.8T   | 1.12TB  |                                                                                                                          	|
+ 
+On top of the RefSeq dataset, we hope to build a DNA - natural language description dataset.  The main reason is that [in-context learning](https://arxiv.org/abs/2402.12530) is the direct result of parallel structure, hence for us to be able to generate sequences based on natural language input, it's not enough to just fine tune on a question-answer dataset but we must also encode the structure we want our outputs to be in our pre-training step. 
 
 ### Models
 
-If applicable, does the project aim to release more than one model? 
-Yes, we hope to release models of varying sizes trained on sequences of varying simliarities/lengths
 
-**UPDATE**
+| Model   	| Parameters | Dataset | Context Window | Input Modality | Output Modality | Experiment Purpose                                   	| GPU hours   |
+| ----------- | ---------- | ------- | -------------- | -------------- | --------------- | -------------------------------------------------------- | ----------- |
+| Transformer | 14M-310M   | RefSeq  | 64-4096    	| Text - DNA 	| Text - DNA  	| Test scaling laws with regards to DNA sequences      	| 150-1000	|
+| DiT     	| 14M-1B 	| RefSeq  | 64-262,144 	| Text - DNA 	| Images      	| Testing whether DNA models can work in longer contexts   | 200 - 4000+ |
+| RMKW    	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
+| Wavelet 	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
 
-There will be both a foundational model and models finetune to specific species/organism categories. For example, models specific to viruses/mammals
+#### Ethical concerns and potential remedies
+The model Github wont’ openly available and will be only made available through the discord during development. When open sourcing the project in the end, we’ll have to consider soft walling the weights. Generally, when considering downstream tasks, concerning potential pathogens, we’ll need to employ some biosafety tests.
 
-What would be the input modality?
-
-Nucleotides encoded as text - DNA/RNA sequences
-
-What about the output modality? 
-
-Depends on the model type. The decoder models will generate nucleotides, the encoder models will generate a vector/embedding. 
-
-How large are the models that the project aims to release?
-
-The sizes of the models will depend on our datasets.
-
-**UPDATE**
-
-A viral model can be as small 300M parameters, however the foundational model will have to be at least 3-4B parameters. 
-
-## Resources
-
-### Requirements
-
-What kinds of resources (e.g. GPU hours, RAM, storage) are needed to complete the project?
-- Roughly 100-1000GPU hours(dependant on the dataset sizes) - This is an estimate. The actual GPU requirements will be dependant on model architecture. The results from our first experiments should provide better guidance
-- 1TB of RAM for the processing stage
-- 5 TB of storage on S3
 
 ### Timeline
 
 What is a (rough) timeline for this project?
-- 1 week to deduplicate/prepare the dataset
-- 1-2 weeks to train the model
-- 1 week to analyse the results
-
-**UPDATE**
-
-That timeline was *HIGHLY* ambitious. The time needed to prepare the dataset is highly dependant on model architecture. An estimate is better made by those who have managed to train an LLM of this scale. 1TB of RAM is not necessary as we can do processing in chunks 
+3-6 months
 
 ## Reproducibility
 
 What steps are going to be taken to ensure the project's reproducibility?
-We'll be releasing the code written & used in the project + the training logs
+We'll be releasing the code written & used in the project, validation/benchmarks as well as the training logs
 
 ## Validation
 
-We're building a [validation library](https://github.com/hssn-20/dvq) to compare generated sequences with source sequences. The library will include a wide range of methods to allow us to inspect sequences visually as well as statistically. 
+We're building a [validation library](https://github.com/hssn-20/dvq) to compare generated sequences with source sequences. The library will include a wide range of methods to allow us to inspect sequences both visually as well as statistically.
 
 ## Failure Case
 
 If our findings are unsatisfactory, do we have an exit plan? Do we have deliverables along the way that we can still provide the community with?
-Yes, the datasets on their own would be useful for the wider community. As would the validation library
-
-**UPDATE**
-
-This still holds true + the encoder models will defintely be usefull for downstream tasks
-
+Yes, the datasets on their own would be useful for the wider community. As would the validation library and the model comparisons.
+ 
 ## Next Steps
 
-If the project is successfully completed, are there any obvious next steps?
-Finetuned generative models for various viruses/virus-like particles e.g. bacteriophages etc.
-
-**UPDATE**
-
-Above + combining the model with other models/projects (eg. ProteinScaling Project, ChemLLM etc.)
-
+Finetuned generative models for various viruses/virus-like particles e.g. bacteriophages. We can also combine the models created with other projects (eg. Protein Scaling Project, ChemLLM etc.)
