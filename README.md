@@ -79,7 +79,6 @@ The model Github wont’ openly available and will be only made available throug
 
 ### Timeline
 
-What is a (rough) timeline for this project?
 3-6 months
 
 ## Reproducibility
