@@ -6,14 +6,14 @@ A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project 
 ## Abstract
 
 This project aims to: 
-Create a DNA sequence - natural language description dataset of diverse species combining publicly available sequences & research papers.
-Build optimised models for DNA that outperform the current state of the art
-Build DNA models able to generate whole genomes
+- Create a DNA sequence - natural language description dataset of diverse species combining publicly available sequences & research papers.
+- Build optimised models for DNA that outperform the current state of the art
+- Build DNA models able to generate whole genomes
 
 Possible downstream tasks for Nucleotide-only LLMs could include:
-Encoders for comparisons/classifications
-Base models for finetuned sequence generators & predictors (for example a page generator for a given bacterial genome, whole genomes for de novo organisms or antibiotic classifiers that take into account bacterial plasmid dna) 
-Predicting sequence quality from small sequences (as found in functional genomics) and large sequences as found in sequencing projects for whole genomes. 
+- Encoders for comparisons/classifications
+- Base models for finetuned sequence generators & predictors (for example a page generator for a given bacterial genome, whole genomes for de novo organisms or antibiotic classifiers that take into account bacterial plasmid dna) 
+- Predicting sequence quality from small sequences (as found in functional genomics) and large sequences as found in sequencing projects for whole genomes. 
 
 
 ## Introduction and Prior Work
