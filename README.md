@@ -33,7 +33,7 @@ Currently most nucleotide based models are species specific, trained on small hi
 
 The project is different because the models trained will be both of a different scale and scope.
 - Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species.
-- Scale - There are currently no models trained on context windows above 1M+. This project will hopefully be the first foundational model capable of generating full genomes.
+- Scale - There are currently no models trained on context windows above 1M+. This project will be the first foundational model capable of generating full genomes.
 
 To validate the thesis that scaling of context size improves model results, we [tested](https://huggingface.co/spaces/Hack90/context_and_viral_dna_models) a range of context windows and their effect on results. The results indicate potential for gains from increased context windows. 
 
