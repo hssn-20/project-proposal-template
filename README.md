@@ -80,6 +80,7 @@ The model Github wont’ openly available and will be only made available throug
 ### Timeline
 
 3-6 months
+Here's a view on our intial experiments, the tasks below are subject to change based on our experimental results. 
 
 | Task                         | Questions being answered                                                                                                                                                                                                                         | Dev Time | Training Time | GPU required | Parallelisable | Colab compatible | Testing For                                                       | Controlling For | Metric   | Blog/Paper |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------- | ------------ | -------------- | ---------------- | ----------------------------------------------------------------- | --------------- | -------- | ---------- |
