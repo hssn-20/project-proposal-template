@@ -3,33 +3,38 @@
 
 A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project slides](https://docs.google.com/presentation/d/1VxHHlj-oJJP8QqPrabcQv0-YYwXhQwiZx7HRmBJ3lb4/edit?usp=sharing)
 
+
 ## Abstract
+This is a project to build a foundation model capable of understanding the language of life, DNA. By creating such a model, we hope to generate DNA sequences as easily as one generates code with ChatGPT. There are many challenges to achieving this goal, and through this project, we aim to identify and overcome them. 
+
+## Highlights
 
 This project aims to: 
-- Create a DNA sequence - natural language description dataset of diverse species combining publicly available sequences & research papers.
-- Build optimised models for DNA that outperform the current state of the art
-- Build DNA models able to generate whole genomes
+- Create a DNA-sequence:natural-language-description dataset of diverse species combining publicly available sequences with their associated texts/research papers.
+- Build homologicaly/topologically optimised DNA models that outperform the current state of the art
+- Build DNA models capable of generating biologically viable whole genomes
 
-Possible downstream tasks for Nucleotide-only LLMs could include:
-- Encoders for comparisons/classifications
-- Base models for finetuned sequence generators & predictors (for example a page generator for a given bacterial genome, whole genomes for de novo organisms or antibiotic classifiers that take into account bacterial plasmid dna) 
-- Predicting sequence quality from small sequences (as found in functional genomics) and large sequences as found in sequencing projects for whole genomes. 
+Potential downstream applications for Nucleotide-only Language Models (LLMs) include:
+- Encoders for sequence comparisons and classifications
+- Base models for fine-tuned sequence generators and predictors, such as:
+  - Bacteria specific phage generators
+  - Whole genome generators for de novo organisms
+  - Antibiotic resistance classifiers based on bacterial plasmid DNA
+- Sequence quality predictors for both small sequences (as found in functional genomics) and large sequences (as found in whole-genome sequencing projects)
 
 
 ## Introduction and Prior Work
+Currently, most nucleotide-based models are phylum-specific, trained on either small high-quality datasets or large low-quality ones. Even [Evo](https://github.com/evo-design/evo?tab=readme-ov-file) does not take into account the topological diversity of the training data. This project aims to create a high-quality dataset comprising various species with varying sequence lengths
 
-Currently most nucleotide based models are species specific, trained on small high quality datasets or large low quality ones. This project hopes to create a high quality dataset of various species of varying sequence lengths.
-
-| Model                         	| Parameters | Dataset                                                                                           	| Dataset size | Context Window | Our improvements                                  	|
-| --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- | ------------ | -------------- | ----------------------------------------------------- |
-| HyenaDNA                      	| 0.44M-6.6M | [Human Reference Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)           	| 3.1B     	| 1k-1M      	| Larger dataset + Longer context windows + Multispecie |
-| DNABert2                      	| 117M   	| [Multi-species genome](https://arxiv.org/pdf/2306.15006.pdf#table.7)                              	| 32.49B   	| 512        	| Larger dataset + Longer context windows           	|
-| Nucleotide Transformer        	| 50M-2.5B   | [Multi-species genome](https://www.biorxiv.org/content/10.1101/2023.01.11.523679v2.full.pdf#A.2)  	| 1T       	| 2024       	| Larger dataset + Longer context windows           	|
-| Genomic Pre-trained Network (GPN) | 30M ~  	| [Single Specie(Brassicales)](https://huggingface.co/datasets/songlab/genomes-brassicales-balanced-v1) | 1.23GB   	| 512        	| Larger dataset + Longer context windows + Multispecie           	|
-| Gena-LM                       	| 110M   	| Human + Multispecie genome                                                                        	| ~10B     	| 512-4096   	| Larger dataset + Longer context windows           	|
-| Grover                        	| 350M   	| [HG19](https://zenodo.org/records/8373053)                                                        	| 2.3GiB   	| 512        	| Larger dataset + Longer context windows + Multispecie           	|
-
- 
+| Model                             | Parameters | Dataset                                                                                               | Dataset size | Context Window | Our improvements                                      | Code                                                                                                                                                 | Weights                                                                                     | Huggingface                                                                                 | Model Type               |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- | ------------ | -------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------ |
+| HyenaDNA                          | 0.44M-6.6M | [Human Refrence Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)               | 3.1B         | 1k-1M          | Larger dataset + Longer context windows + Multispecie | [HazyResearch/hyena-dna](https://github.com/HazyResearch/hyena-dna)                                                                                  | [LongSafari](https://huggingface.co/LongSafari)                                             | [LongSafari](https://huggingface.co/LongSafari)                                             | SSM                      |
+| DNABert2                          | 117M       | [Multi-species genome](https://arxiv.org/pdf/2306.15006.pdf#table.7)                                  | 32.49B       | 512            | Larger dataset + Longer context windows               | [Zhihan1996/DNABERT_2](https://github.com/Zhihan1996/DNABERT_2)                                                                                      | [DNABERT-2-117M](https://huggingface.co/zhihan1996/DNABERT-2-117M)                          | [DNABERT-2-117M](https://huggingface.co/zhihan1996/DNABERT-2-117M)                          | Encoder - Transformer    |
+| Nucleotide Transformer            | 50M-2.5B   | [Multi-species genome](https://www.biorxiv.org/content/10.1101/2023.01.11.523679v2.full.pdf#A.2)      | 1T           | 2024           | Larger dataset + Longer context windows               | [Nucleotide Transformer: Building and Evaluating Robust Foundation Models for Human Genomics](https://github.com/instadeepai/nucleotide-transformer) | [InstaDeepAI (InstaDeep Ltd)](https://huggingface.co/InstaDeepAI)                           | [https://huggingface.co/InstaDeepAI](https://huggingface.co/InstaDeepAI)                    | Decoder - Transformer    |
+| Genomic Pre-trained Network (GPN) | 30M ~      | [Single Specie(Brassicales)](https://huggingface.co/datasets/songlab/genomes-brassicales-balanced-v1) | 1.23GB       | 512            | Larger dataset + Longer context windows               | [songlab-cal/gpn](https://github.com/songlab-cal/gpn)                                                                                                | No weights released                                                                         |                                                                                             | Encoder - Transformer    |
+| Gena-LM                           | 110M       | Human + Multispecis genome                                                                            | ~10B         | 512-4096       | Larger dataset + Longer context windows               | [GitHub - AIRI-Institute/GENA_LM](https://github.com/AIRI-Institute/GENA_LM)                                                                         | [AIRI - Artificial Intelligence Research Institute](https://huggingface.co/AIRI-Institute)  | [AIRI - Artificial Intelligence Research Institute](https://huggingface.co/AIRI-Institute)  | Encoder - Transformer    |
+| Grover                            | 350M       | [HG19](https://zenodo.org/records/8373053)                                                            | 2.3GiB       | 512            | Larger dataset + Longer context windows               | [GROVER pretrained DNA language model of the human genome.](https://zenodo.org/records/8373117)                                                      | [https://zenodo.org/records/8373117](https://zenodo.org/records/8373117)                    | N/A                                                                                         | Encoder - Transformer    |
+| EVO                               | 7B         | [OpenGenome](https://www.biorxiv.org/content/10.1101/2024.02.27.582234v1.full.pdf#appendix.B)         | 250B         | 8k-131k        | Larger dataset + Longer context windows + Multispecie | [EVO](https://github.com/evo-design/evo?tab=readme-ov-file)                                                                                          | [togethercomputer/evo-1-131k-base](https://huggingface.co/togethercomputer/evo-1-131k-base) | [togethercomputer/evo-1-131k-base](https://huggingface.co/togethercomputer/evo-1-131k-base) | SSM - Transformer Hybrid |
 
 The project is different because the models trained will be both of a different scale and scope.
 - Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species.
@@ -43,7 +48,7 @@ To gain intuition with regard to the importance of increasing organism variety, 
 
 ### Datasets
 
-For our initial nucleotide models we have decided to use the RefSeq dataset: 
+For our initial nucleotide models, we will use the RefSeq dataset: 
 
 | Type         	| Tokens | Size	| Huggingface                                                                                                              	|
 | ---------------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -61,7 +66,7 @@ For our initial nucleotide models we have decided to use the RefSeq dataset:
 | Mitochondrion	| 0.537B | 0.158GB | [https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion](https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion) |
 | Total        	| 3.8T   | 1.12TB  |                                                                                                                          	|
  
-On top of the RefSeq dataset, we hope to build a DNA - natural language description dataset.  The main reason is that [in-context learning](https://arxiv.org/abs/2402.12530) is the direct result of parallel structure, hence for us to be able to generate sequences based on natural language input, it's not enough to just fine tune on a question-answer dataset but we must also encode the structure we want our outputs to be in our pre-training step. 
+In addition to the RefSeq dataset, we will create a DNA-natural language description dataset. The main reason for this is that [in-context learning](https://arxiv.org/abs/2402.12530) is a direct result of parallel structure. Therefore, to generate sequences based on natural language input, it is not sufficient to fine-tune the model on a question-answer dataset alone. Instead, we must also encode the desired output structure during the pre-training step.
 
 ### Models
 
@@ -70,17 +75,16 @@ On top of the RefSeq dataset, we hope to build a DNA - natural language descript
 | ----------- | ---------- | ------- | -------------- | -------------- | --------------- | -------------------------------------------------------- | ----------- |
 | Transformer | 14M-310M   | RefSeq  | 64-4096    	| Text - DNA 	| Text - DNA  	| Test scaling laws with regards to DNA sequences      	| 150-1000	|
 | DiT     	| 14M-1B 	| RefSeq  | 64-262,144 	| Text - DNA 	| Images      	| Testing whether DNA models can work in longer contexts   | 200 - 4000+ |
-| RMKW    	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
+| Based(Hybrid SSM/Transformer model)    	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
 | Wavelet 	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
 
 #### Ethical concerns and potential remedies
-The model Github wont’ openly available and will be only made available through the discord during development. When open sourcing the project in the end, we’ll have to consider soft walling the weights. Generally, when considering downstream tasks, concerning potential pathogens, we’ll need to employ some biosafety tests.
+The model and its code will not be openly available on GitHub during development and will only be accessible through the project's Discord server. When open-sourcing the project upon completion, we will need to consider implementing access restrictions to the model's weights. Furthermore, when exploring downstream tasks involving potential pathogens, it will be crucial to employ appropriate biosafety tests and adhere to relevant regulations and guidelines.
 
 
 ### Timeline
 
-3-6 months
-Here's a view on our intial experiments, the tasks below are subject to change based on our experimental results. 
+We anticipate that the initial experiments will take approximately 3-6 months to complete. The following is an overview of our planned initial experiments; however, these tasks are subject to change based on the results we obtain.
 
 | Task                         | Questions being answered                                                                                                                                                                                                                         | Dev Time | Training Time | GPU required | Parallelisable | Colab compatible | Testing For                                                       | Controlling For | Metric   | Blog/Paper |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------- | ------------ | -------------- | ---------------- | ----------------------------------------------------------------- | --------------- | -------- | ---------- |
