@@ -7,7 +7,7 @@ A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project 
 ## Abstract
 This is a project to build a foundation model capable of understanding the language of life, DNA. By creating such a model, we hope to generate DNA sequences as easily as one generates code with ChatGPT. There are many challenges to achieving this goal, and through this project, we aim to identify and overcome them. 
 
-## Highlights
+## Project Objectives
 
 This project aims to: 
 - Create a DNA-sequence:natural-language-description dataset of diverse species combining publicly available sequences with their associated texts/research papers.
