@@ -53,18 +53,18 @@ For our initial nucleotide models, we will use the RefSeq dataset:
 
 | Type         	| Tokens | Size	| Huggingface                                                                                                              	|
 | ---------------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Fungi        	| 18B	| 5.4GB   | [https://huggingface.co/datasets/Hack90/ref_seq_fungi](https://huggingface.co/datasets/Hack90/ref_seq_fungi)             	|
-| Bacteria     	| 1368B  | 402GB   |                                                                                                                          	|
-| Invertebrate 	| 369B   | 108GB   | [https://huggingface.co/datasets/Hack90/ref_seq_invertebrate](https://huggingface.co/datasets/Hack90/ref_seq_invertebrate)   |
-| Mammals      	| 859B   | 252GB   |                                                                                                                          	|
-| Vertebrate Other | 867B   | 255GB   |                                                                                                                          	|
-| Protozoa     	| 3.7B   | 1GB 	| [https://huggingface.co/datasets/Hack90/ref_seq_protozoa](https://huggingface.co/datasets/Hack90/ref_seq_protozoa)       	|
-| Plasmids     	| 6.4B   | 1.89GB  | [https://huggingface.co/datasets/Hack90/ref_seq_plasmid](https://huggingface.co/datasets/Hack90/ref_seq_plasmid)         	|
-| Plastids     	| 2.1B   | 0.63GB  | [https://huggingface.co/datasets/Hack90/ref_seq_plastid](https://huggingface.co/datasets/Hack90/ref_seq_plastid)         	|
-| Archea       	| 5.4B   | 1.588GB | [https://huggingface.co/datasets/Hack90/ref_seq_archaea](https://huggingface.co/datasets/Hack90/ref_seq_archaea)         	|
-| Viruses      	| 0.54B  | 0.161GB | [https://huggingface.co/datasets/Hack90/ref_seq_viral](https://huggingface.co/datasets/Hack90/ref_seq_viral)             	|
-| Plants       	| 299B   | 88.2GB  |                                                                                                                          	|
-| Mitochondrion	| 0.537B | 0.158GB | [https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion](https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion) |
+| Fungi        	| 18B	| 5.4GB   | [Fungi Genomes](https://huggingface.co/datasets/Hack90/ref_seq_fungi)             	|
+| Bacteria     	| 1368B  | 402GB   |    [Bacteria Genomes Part 1](https://huggingface.co/datasets/Hack90/ref_seq_bacteria_part_1)  [Bacteria Genomes Part 2](https://huggingface.co/datasets/Hack90/ref_seq_bacteria_part_2) [Bacteria Genomes Part 3](https://huggingface.co/datasets/Hack90/ref_seq_bacteria_part_3)  [Bacteria Genomes Part 4](https://huggingface.co/datasets/Hack90/ref_seq_bacteria_part_4)                                                                                                                        	|
+| Invertebrate 	| 369B   | 108GB   | [Invertebrate Genomes](https://huggingface.co/datasets/Hack90/ref_seq_invertebrate)   |
+| Mammals      	| 859B   | 252GB   |    [Mammal Genomes Part 1](https://huggingface.co/datasets/Hack90/ref_seq_mammals_part_1) [Mammal Genomes Part 2](https://huggingface.co/datasets/Hack90/ref_seq_mammals_part_2)                                                                                                                       	|
+| Vertebrate Other | 867B   | 255GB   |  [Non-mammal Vertebrate Genomes Part 1](https://huggingface.co/datasets/Hack90/ref_seq_vertebrate_non_mammal_part_1) [Non-mammal Vertebrate Genomes Part 1](https://huggingface.co/datasets/Hack90/ref_seq_vertebrate_non_mammal_part_2)                                                                                                                        	|
+| Protozoa     	| 3.7B   | 1GB 	| [Protozoa Genomes](https://huggingface.co/datasets/Hack90/ref_seq_protozoa)       	|
+| Plasmids     	| 6.4B   | 1.89GB  | [Plasmid Genomes](https://huggingface.co/datasets/Hack90/ref_seq_plasmid)         	|
+| Plastids     	| 2.1B   | 0.63GB  | [Plastid Genomes](https://huggingface.co/datasets/Hack90/ref_seq_plastid)         	|
+| Archea       	| 5.4B   | 1.588GB | [Archea Genomes](https://huggingface.co/datasets/Hack90/ref_seq_archaea)         	|
+| Viruses      	| 0.54B  | 0.161GB | [Viral Genomes](https://huggingface.co/datasets/Hack90/ref_seq_viral)             	|
+| Plants       	| 299B   | 88.2GB  | [Plant Genomes](https://huggingface.co/datasets/Hack90/ref_seq_plants)                                                                                                                          	|
+| Mitochondrion	| 0.537B | 0.158GB | [Mitochondrion Genomes](https://huggingface.co/datasets/Hack90/ref_seq_mitochondrion) |
 | Total        	| 3.8T   | 1.12TB  |                                                                                                                          	|
  
 In addition to the RefSeq dataset, we will create a DNA-natural language description dataset. The main reason for this is that [in-context learning](https://arxiv.org/abs/2402.12530) is a direct result of parallel structure. Therefore, to generate sequences based on natural language input, it is not sufficient to fine-tune the model on a question-answer dataset alone. Instead, we must also encode the desired output structure during the pre-training step.
