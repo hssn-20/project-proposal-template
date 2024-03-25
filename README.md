@@ -5,12 +5,22 @@ A proposal by Hassan Ahmed (@utterly_butterly), Max Sprang(@de_muedi). [Project 
 
 
 ## Abstract
-This is a project to build a foundation model capable of understanding the language of life, DNA. By creating such a model, we hope to generate DNA sequences as easily as one generates code with ChatGPT. There are many challenges to achieving this goal, and through this project, we aim to identify and overcome them. 
+Life is abundant, its everywhere. Yet the chance of an echoli arising spontaneously is:
+```math
+10^{{-10}^{10}} 
+```
+A tiny number. Somehow DNA enables that to happen day in, day out. DNA stands for deoxyribonucleic acid, it is the instruction set which creates life as well as the script it’s written in. At its simplest, it can be thought of as a sequence of letters drawn from a four letter alphabet, [A,T,C,G], structured as a base-paired helix. These simple chemicals, Adenine, Thymine, Guanine and Cytosine encode all the complexity that we see.
+
+However, we mustn’t think of genomes as a simple sequence of base pairs, our concept of the genome must also include the physical properties of each bond as well as their first/second/third/n-order effects of base pairs on each other.
+
+Be that as it may, all we have for most genomes are just sequences. Some of which are not even aligned. So how can we build model that is able to generate out-of-distribution (i.e. not in the training data) sequences when our training data is so poor? How do we trust and verify the models that we create? Or at an even more basic level, where does a DNA foundation model sit in the bioinformatics toolkit?
+
+With this project, we aim to answer those questions and more. 
 
 ## Project Objectives
 
 This project aims to: 
-- Create a DNA-sequence:natural-language-description dataset of diverse species combining publicly available sequences with their associated texts/research papers.
+- Create a DNA-sequence:natural-language-description dataset of diverse species combining publicly available sequences with their associated texts/research papers. 
 - Build homologicaly/topologically optimised DNA models that outperform the current state of the art
 - Build DNA models capable of generating biologically viable whole genomes
 
@@ -24,7 +34,7 @@ Potential downstream applications for Nucleotide-only Language Models (LLMs) inc
 
 
 ## Introduction and Prior Work
-Currently, most nucleotide-based models are phylum-specific, trained on either small high-quality datasets or large low-quality ones. Even [Evo](https://github.com/evo-design/evo?tab=readme-ov-file) does not take into account the topological diversity of the training data. This project aims to create a high-quality dataset comprising various species with varying sequence lengths
+Currently, most nucleotide-based models are either: phylum-specific, trained on either small high-quality datasets or large low-quality ones. Even [Evo](https://github.com/evo-design/evo?tab=readme-ov-file) does not take into account the topological diversity of the training data. This project aims to create a high-quality dataset comprising various species with varying sequence lengths
 
 | Model                             | Parameters | Dataset                                                                                               | Dataset size | Context Window | Our improvements                                      | Code                                                                                                                                                 | Weights                                                                                                                                                                    | Huggingface                                                                                                                                                                | Model Type                                                                                                                                                                 |
 | --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- | ------------ | -------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -38,8 +48,8 @@ Currently, most nucleotide-based models are phylum-specific, trained on either s
 | Caduceus                          | 30M        | [Human Refrence Genome](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/)               | 3.1B         | 131k           | Larger dataset + Longer context windows + Multispecie | [kuleshov-group/caduceus](https://github.com/kuleshov-group/caduceus?tab=readme-ov-file)                       | [https://huggingface.co/collections/kuleshov-group/caduceus-65dcb89b4f54e416ef61c350](https://huggingface.co/collections/kuleshov-group/caduceus-65dcb89b4f54e416ef61c350) | [kuleshov-group/caduceus](https://huggingface.co/collections/kuleshov-group/caduceus-65dcb89b4f54e416ef61c350) | [kuleshov-group/caduceus](https://huggingface.co/collections/kuleshov-group/caduceus-65dcb89b4f54e416ef61c350) |
 
 The project is different because the models trained will be both of a different scale and scope.
-- Scope - The models will be trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species.
-- Scale - There are currently no models trained on context windows above 1M+. This project will be the first foundational model capable of generating full genomes.
+- Scope - The models will be: trained on a large variety of species unlike most current models which are either trained on humans or a limited range of species, test a variety of loss functions and compare different model architectures. 
+- Scale - There are currently no models trained on context windows above 1M+. This project will create the first foundational model capable of generating full genomes.
 
 To validate the thesis that scaling of context size improves model results, we [tested](https://huggingface.co/spaces/Hack90/context_and_viral_dna_models) a range of context windows and their effect on results. The results indicate potential for gains from increased context windows. 
 
@@ -77,7 +87,7 @@ In addition to the RefSeq dataset, we will create a DNA-natural language descrip
 | Transformer | 14M-310M   | RefSeq  | 64-4096    	| Text - DNA 	| Text - DNA  	| Test scaling laws with regards to DNA sequences      	| 150-1000	|
 | DiT     	| 14M-1B 	| RefSeq  | 64-262,144 	| Text - DNA 	| Images      	| Testing whether DNA models can work in longer contexts   | 200 - 4000+ |
 | Based(Hybrid SSM/Transformer model)    	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
-| Wavelet 	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
+| RL Model 	| 14M-310M   | RefSeq  | 64-64,000,000  | Text - DNA 	| Text - DNA  	| Testing architecture usefulness vs standard transformers | 150     	|
 
 #### Ethical concerns and potential remedies
 The model and its code will not be openly available on GitHub during development and will only be accessible through the project's Discord server. When open-sourcing the project upon completion, we will need to consider implementing access restrictions to the model's weights. Furthermore, when exploring downstream tasks involving potential pathogens, it will be crucial to employ appropriate biosafety tests and adhere to relevant regulations and guidelines.
@@ -89,7 +99,7 @@ We anticipate that the initial experiments will take approximately 3-6 months to
 
 | Task                         | Questions being answered                                                                                                                                                                                                                         | Dev Time | Training Time | GPU required | Parallelisable | Colab compatible | Testing For                                                       | Controlling For | Metric   | Blog/Paper |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------- | ------------ | -------------- | ---------------- | ----------------------------------------------------------------- | --------------- | -------- | ---------- |
-| Optimal Tokenizer            | Whats the best tokenizer method in this context? Whats our optimal kmer length? What are the trade offs with regards to tokenization in this context? What do we lose, what do we gain, information wise?                                                        | 6 hrs    | 15 hrs        | Yes          | Yes            | Yes              | k-mer, vocab size, tokenizer method                                                 | ~ model size    | Loss     | Blog 1     |
+| Optimal Tokenizer + Loss Function            | Whats the best tokenizer method in this context? Whats our optimal kmer length? What are the trade offs with regards to tokenization in this context? What do we lose, what do we gain, information wise? Similar questions with regards to loss functions. Eg.g does using persistant homology help or hinder a model?                                                         | 6 hrs    | 15 hrs        | Yes          | Yes            | Yes              | k-mer, vocab size, tokenizer method, loss function                                                 | ~ model size    | Loss     | Blog 1     |
 | Inter-Phylum/Class Structure | Whats the underlying structure of each phylum? Can we measure it? What are the weaknesses/strengths of each measure? What are the distances within phylums? Most common kmer at each length?                                                     | 10 hrs   | 50 hrs        | No           | Yes            | Yes              | persistant homology, kl-divergence, colorsquare, wens method, CGR | phylum/class    | Distance | Paper 1    |
 | Intra-Phylum/Class Structure | What are distances between phylums,both local and global? Whats the effect of genome length on those distances? Looking at the full dataset can we measure biological viability, if so, how?                                                     | 0.5 hrs  | 60 hrs        | No           | Kinda          | Yes              | persistant homology, kl-divergence, colorsquare, wens method, CGR | Sample Size     | Distance | Paper 1    |
 | Transformer Scaling          | As we increase context windows and model params, does loss go down in commiserate manner?                                                                                                                                                        | 0.5 hrs  | 50 hrs        | Yes          | Yes            | Yes              | Context Size, Model Params                                        | Training Data   | Loss     | Paper 2    |
